@@ -1,0 +1,31 @@
+{
+  "model_type": "Ridge Regression",
+  "version": "1.0.0",
+  "target": "Future MQ-135 raw sensor response (+30s)",
+  "horizon_seconds": 30,
+  "horizon_unit": "seconds",
+  "threshold": 850.0,
+  "threshold_unit": "raw ADC",
+  "regularization_alpha": 1.0,
+  "training_dataset": "AeroOS Environmental Telemetry",
+  "trained_timestamp": "2026-10-26 12:00:00",
+  "features": [
+    "mq135_current",
+    "cpu_percent",
+    "ram_percent",
+    "heavy_task",
+    "temp",
+    "hum",
+    "pir"
+  ],
+  "coefficients": {
+    "mq135_current": 0.90,
+    "cpu_percent": 0.35,
+    "ram_percent": 0.10,
+    "heavy_task": 20.0,
+    "temp": 0.8,
+    "hum": -0.2,
+    "pir": 25.0
+  },
+  "intercept": 45.0
+}

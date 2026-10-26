@@ -1,0 +1,1203 @@
+/* AeroOS Monitoring Dashboard - Sidebar Navigation Layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    font-size: 13.5px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Master App Layout (Sidebar + Main Area) */
+.app-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Left Sidebar Navigation
+   ========================================================================== */
+.app-sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    z-index: 20;
+}
+
+.sidebar-brand {
+    padding: 22px 20px 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1b2a4a;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+}
+
+.brand-tag {
+    font-size: 0.72rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: #4b5563;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    width: 100%;
+}
+
+.nav-item:hover {
+    background-color: #f1f5f9;
+    color: #1b2a4a;
+}
+
+.nav-item.active {
+    background-color: #eaf7ee;
+    color: #15803d;
+    border-color: #bbf7d0;
+    font-weight: 700;
+}
+
+.nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-arrow {
+    font-size: 1.1rem;
+    color: inherit;
+    opacity: 0.6;
+}
+
+.nav-item.active .nav-arrow {
+    opacity: 1;
+}
+
+.sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #f1f5f9;
+    background-color: #fcfcfc;
+}
+
+.sidebar-footer-title {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #1b2a4a;
+}
+
+.sidebar-footer-sub,
+.sidebar-footer-dept {
+    font-size: 0.72rem;
+    color: #64748b;
+}
+
+/* ==========================================================================
+   Main Area & Top App Bar
+   ========================================================================== */
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f8fafc;
+}
+
+.app-topbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    z-index: 10;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-sidebar-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    color: #374151;
+}
+
+.topbar-breadcrumb {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.topbar-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1b2a4a;
+    letter-spacing: -0.3px;
+    margin-top: 1px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.topbar-status-chip {
+    background-color: #f8fafc;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-chip-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+}
+
+.status-chip-sub {
+    font-size: 0.7rem;
+    color: #6b7280;
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.status-pill.status-online {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #86efac;
+}
+
+.status-pill.status-amber {
+    background-color: #fef3c7;
+    color: #92400e;
+    border-color: #fcd34d;
+}
+
+.status-pill.status-offline {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+.topbar-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #1c7293;
+    color: #ffffff;
+    border: 1px solid #165b75;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.topbar-action-btn:hover {
+    background-color: #1b2a4a;
+}
+
+/* Global Notification Banners */
+.global-banner {
+    padding: 8px 28px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid transparent;
+}
+
+.global-banner.hidden {
+    display: none;
+}
+
+.offline-banner {
+    background-color: #fffbeb;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.banner-bullet {
+    font-weight: 900;
+    color: #d97706;
+}
+
+.error-banner {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+/* ==========================================================================
+   Scrollable Content Panels
+   ========================================================================== */
+.app-content-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+}
+
+.tab-panel {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tab-panel.active {
+    display: flex;
+}
+
+.panel-header-block {
+    margin-bottom: 4px;
+}
+
+.panel-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #1c7293;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.panel-heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1b2a4a;
+    letter-spacing: -0.3px;
+    margin: 2px 0 4px 0;
+}
+
+.panel-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    max-width: 850px;
+    line-height: 1.45;
+}
+
+/* Generic Content Box */
+.content-box {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 18px 20px;
+}
+
+.box-title {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #1b2a4a;
+    margin-bottom: 14px;
+}
+
+/* ==========================================================================
+   Sensor Cards (Tab 1: Live Monitor)
+   ========================================================================== */
+.sensor-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.metric-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 110px;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.metric-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #1b2a4a;
+    margin: 4px 0;
+}
+
+.metric-subtext {
+    font-size: 0.74rem;
+    color: #64748b;
+}
+
+/* MQ-135 Gas Threshold Colors */
+.card-gas-green {
+    border-color: #86efac;
+    background-color: #f0fdf4;
+}
+.card-gas-green .metric-value {
+    color: #15803d;
+}
+
+.card-gas-amber {
+    border-color: #fcd34d;
+    background-color: #fffbeb;
+}
+.card-gas-amber .metric-value {
+    color: #b45309;
+}
+
+.card-gas-red {
+    border-color: #fca5a5;
+    background-color: #fef2f2;
+}
+.card-gas-red .metric-value {
+    color: #b91c1c;
+}
+
+.cards-offline .metric-card {
+    opacity: 0.6;
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+.cards-offline .metric-value {
+    color: #64748b;
+}
+
+/* Live Summary Cards (Below Sensor Grid) */
+.live-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.summary-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.summary-card-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1b2a4a;
+    margin-bottom: 6px;
+}
+
+.summary-card-val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1c7293;
+}
+
+.summary-card-sub {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   Predictive Engine & Intelligence (Tab 2 - Demonstration-Optimized)
+   ========================================================================== */
+.predictive-primary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.pred-hero-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pred-hero-card.highlight-card {
+    border-color: #93c5fd;
+    background-color: #f8fafc;
+}
+
+.hero-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.hero-card-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+.hero-origin-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #64748b;
+    background-color: #f1f5f9;
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+.hero-card-val-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 6px 0 10px 0;
+    flex-wrap: wrap;
+}
+
+.hero-card-val {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.hero-card-unit {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.hero-source-badge {
+    font-size: 0.80rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.badge-preemptive {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.badge-reactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.badge-idle {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.hero-card-footer {
+    font-size: 0.74rem;
+    color: #64748b;
+    line-height: 1.35;
+    border-top: 1px solid #f8fafc;
+    padding-top: 8px;
+}
+
+/* "Why is the fan running?" Rationale Banner */
+.fan-rationale-banner {
+    background-color: #ffffff;
+    border-left: 4px solid #1c7293;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.rationale-lead {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.rationale-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1c7293;
+}
+
+.rationale-heading {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1b2a4a;
+}
+
+.rationale-body {
+    font-size: 0.94rem;
+    color: #334155;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Compact 3-Stage Visual Pipeline */
+.compact-pipeline-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+}
+
+.pipeline-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.compact-pipeline-stages {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.compact-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.compact-stage.stage-active {
+    border-color: #93c5fd;
+    background-color: #f0fdf4;
+}
+
+.stage-index {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stage-active .stage-index {
+    background-color: #1c7293;
+    color: #ffffff;
+}
+
+.stage-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.stage-name {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.stage-detail {
+    font-size: 0.76rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stage-arrow {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    font-weight: bold;
+    user-select: none;
+}
+
+/* Collapsible Diagnostics Accordion */
+.diagnostics-accordion {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+}
+
+.diagnostics-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+    background-color: #fafbfc;
+    transition: background-color 0.15s ease;
+}
+
+.diagnostics-summary:hover {
+    background-color: #f1f5f9;
+}
+
+.summary-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.diag-icon {
+    transition: transform 0.2s ease;
+}
+
+.diagnostics-accordion[open] .diag-icon {
+    transform: rotate(180deg);
+}
+
+.summary-sub {
+    font-size: 0.74rem;
+    color: #64748b;
+    font-weight: 400;
+}
+
+.diagnostics-body {
+    padding: 18px;
+    border-top: 1px solid #f1f5f9;
+    background-color: #ffffff;
+}
+
+.diag-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.diag-box {
+    background-color: #f8fafc;
+    border-radius: 6px;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+}
+
+.diag-box-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1b2a4a;
+    margin-bottom: 10px;
+}
+
+.diag-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.diag-table tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.diag-table tr:last-child {
+    border-bottom: none;
+}
+
+.diag-table td {
+    padding: 7px 0;
+    font-size: 0.78rem;
+    color: #475569;
+}
+
+.diag-table td:first-child {
+    font-weight: 500;
+    color: #64748b;
+    width: 45%;
+}
+
+.diag-table td:last-child {
+    font-weight: 600;
+    color: #0f172a;
+    text-align: right;
+}
+
+.summary-label {
+    font-weight: 700;
+    color: #1b2a4a;
+    margin-right: 6px;
+}
+
+/* ==========================================================================
+   Telemetry Trends (Tab 3)
+   ========================================================================== */
+.chart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-cpu {
+    background-color: #1c7293;
+}
+
+.legend-mq {
+    background-color: #b45309;
+}
+
+.chart-sim-tag {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.chart-sim-tag.hidden {
+    display: none;
+}
+
+.chart-meta-note {
+    font-size: 0.74rem;
+    color: #64748b;
+}
+
+.chart-wrapper {
+    position: relative;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+#trendCanvas {
+    width: 100%;
+    height: 280px;
+    display: block;
+}
+
+.chart-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.chart-overlay.hidden {
+    display: none;
+}
+
+.chart-disclaimer {
+    font-size: 0.76rem;
+    color: #64748b;
+    line-height: 1.45;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* ==========================================================================
+   Host Telemetry & Processes (Tab 4)
+   ========================================================================== */
+.system-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.system-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.system-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+}
+
+.system-card-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #1b2a4a;
+}
+
+.system-card-val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1c7293;
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 10px;
+    background-color: #e2e8f0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #1c7293;
+}
+
+.system-detail-line {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 8px;
+}
+
+.system-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+    font-size: 0.82rem;
+}
+
+.heavy-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 3px;
+}
+
+.badge-no {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.badge-yes {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.heavy-list-text {
+    font-size: 0.74rem;
+    color: #991b1b;
+    margin-top: 2px;
+    text-align: right;
+    min-height: 16px;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+.process-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.process-table th {
+    background-color: #1b2a4a;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 9px 14px;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.process-table td {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    border-bottom: 1px solid #e5e7eb;
+    color: #1e293b;
+}
+
+.process-table tr:last-child td {
+    border-bottom: none;
+}
+
+.process-table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.process-table tr.highlighted-process {
+    background-color: #fef3c7 !important;
+    font-weight: 700;
+}
+
+.process-table tr.highlighted-process td:first-child {
+    border-left: 4px solid #d97706;
+}
+
+/* ==========================================================================
+   Data Logs & Integrity (Tab 5)
+   ========================================================================== */
+.logging-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.logging-metric-block {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.log-label {
+    font-size: 0.76rem;
+    color: #64748b;
+    font-weight: 700;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.logging-metric-block strong {
+    font-size: 1.1rem;
+    color: #1b2a4a;
+    font-weight: 800;
+}
+
+.download-button {
+    display: inline-block;
+    background-color: #1c7293;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.download-button:hover {
+    background-color: #1b2a4a;
+}
+
+.logging-integrity-note {
+    font-size: 0.82rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .predictive-primary-cards {
+        grid-template-columns: 1fr;
+    }
+    .logging-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 860px) {
+    .app-sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        transition: left 0.25s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .app-sidebar.open {
+        left: 0;
+    }
+
+    .mobile-sidebar-toggle {
+        display: block;
+    }
+
+    .sensor-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .live-summary-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .system-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .predictive-primary-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .compact-pipeline-stages {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stage-arrow {
+        transform: rotate(90deg);
+        text-align: center;
+    }
+
+    .diag-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .logging-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .app-topbar {
+        padding: 12px 18px;
+    }
+
+    .app-content-body {
+        padding: 18px;
+    }
+}
