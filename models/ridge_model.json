@@ -8,7 +8,14 @@
   "threshold_unit": "raw ADC",
   "regularization_alpha": 1.0,
   "training_dataset": "AeroOS Environmental Telemetry",
-  "trained_timestamp": "2026-10-26 12:00:00",
+  "trained_timestamp": "2026-10-26 21:22:15",
+  "training_metrics": {
+    "samples_used": 237,
+    "r2_score": 0.8793,
+    "mae": 47.41,
+    "rmse": 64.53,
+    "engine": "Pure-Python Normal Equations"
+  },
   "features": [
     "mq135_current",
     "cpu_percent",
@@ -19,13 +26,13 @@
     "pir"
   ],
   "coefficients": {
-    "mq135_current": 0.90,
-    "cpu_percent": 0.35,
-    "ram_percent": 0.10,
-    "heavy_task": 20.0,
-    "temp": 0.8,
-    "hum": -0.2,
-    "pir": 25.0
+    "mq135_current": 0.5741,
+    "cpu_percent": -0.1266,
+    "ram_percent": -2.1804,
+    "heavy_task": 92.9806,
+    "temp": -27.2546,
+    "hum": -25.7317,
+    "pir": -12.3989
   },
-  "intercept": 45.0
+  "intercept": 2905.8124
 }
