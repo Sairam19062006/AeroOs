@@ -153,6 +153,12 @@ def send_udp_command(target_addr, command_dict):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         msg = json.dumps(command_dict).encode("utf-8")
         sock.sendto(msg, target_addr)
+        # Also ensure delivery to standard hardware command listen port 5007 if source port was ephemeral
+        if target_addr and len(target_addr) == 2 and target_addr[1] != 5007:
+            try:
+                sock.sendto(msg, (target_addr[0], 5007))
+            except Exception:
+                pass
         sock.close()
         return True
     except Exception:
