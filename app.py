@@ -9,6 +9,7 @@ from datetime import datetime
 from collections import deque
 from flask import Flask, render_template, jsonify, send_file
 import psutil
+from tools.train_model import train_and_export
 
 UDP_PORT = 5006
 LOG_FILE_PATH = os.path.join(os.path.dirname(__file__), "data", "log.csv")
@@ -54,6 +55,22 @@ logging_state = {
     "sample_count": 0
 }
 
+# Global Autonomous Retraining State
+auto_retrain_state = {
+    "status": "ACTIVE",              # "ACTIVE", "TRAINING", "ERROR"
+    "enabled": True,
+    "last_retrain_time": None,
+    "samples_used": 0,
+    "r2_score": None,
+    "mae": None,
+    "rmse": None,
+    "engine": "Autonomous Daemon",
+    "retrain_count": 0,
+    "trigger_interval_samples": 30,  # Retrain every ~30 new samples (~60s of telemetry)
+    "last_retrained_sample_count": 0,
+    "message": "Autonomous background retrainer standing by."
+}
+
 cpu_sample_count = 0
 
 # --- RIDGE REGRESSION MODEL ENGINE ---
@@ -62,15 +79,18 @@ class RidgeModelEngine:
         self.model_file = model_file
         self.status = "NOT LOADED"
         self.model_data = None
+        self.last_mtime = 0
         self.load_model()
 
     def load_model(self):
         if not os.path.exists(self.model_file):
             self.status = "NOT LOADED"
             self.model_data = None
+            self.last_mtime = 0
             return False
 
         try:
+            mtime = os.path.getmtime(self.model_file)
             with open(self.model_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
@@ -84,6 +104,7 @@ class RidgeModelEngine:
 
             self.model_data = data
             self.status = "LOADED"
+            self.last_mtime = mtime
             return True
         except Exception:
             self.status = "ERROR"
@@ -94,10 +115,15 @@ class RidgeModelEngine:
         if not os.path.exists(self.model_file):
             self.status = "NOT LOADED"
             self.model_data = None
+            self.last_mtime = 0
             return False
-        # If file exists, ensure it is loaded
-        if self.status != "LOADED" or not self.model_data:
-            return self.load_model()
+        # If file exists, reload if status not LOADED or file timestamp changed
+        try:
+            mtime = os.path.getmtime(self.model_file)
+            if self.status != "LOADED" or not self.model_data or mtime != self.last_mtime:
+                return self.load_model()
+        except Exception:
+            pass
         return True
 
     def predict(self, feature_dict):
@@ -121,6 +147,83 @@ class RidgeModelEngine:
             return None
 
 model_engine = RidgeModelEngine(MODEL_PATH)
+
+# Seed auto-retrain state from existing model artifact if available
+if model_engine.status == "LOADED" and model_engine.model_data:
+    tm = model_engine.model_data.get("training_metrics", {})
+    auto_retrain_state["last_retrain_time"] = model_engine.model_data.get("trained_timestamp")
+    auto_retrain_state["samples_used"] = tm.get("samples_used", 0)
+    auto_retrain_state["r2_score"] = tm.get("r2_score")
+    auto_retrain_state["mae"] = tm.get("mae")
+    auto_retrain_state["rmse"] = tm.get("rmse")
+    auto_retrain_state["engine"] = tm.get("engine", "Normal Equations")
+
+# --- AUTONOMOUS BACKGROUND RETRAINING WORKER ---
+def execute_background_retrain(reason="Scheduled"):
+    """
+    Executes model retraining in a non-blocking background thread.
+    Hot-reloads weights into model_engine and updates auto_retrain_state.
+    """
+    def _worker():
+        global auto_retrain_state
+        with state_lock:
+            if auto_retrain_state["status"] == "TRAINING":
+                return
+            auto_retrain_state["status"] = "TRAINING"
+            auto_retrain_state["message"] = f"Retraining in background ({reason})..."
+
+        try:
+            artifact = train_and_export(LOG_FILE_PATH, MODEL_PATH)
+            model_engine.refresh_model()
+
+            with state_lock:
+                metrics = artifact.get("training_metrics", {})
+                curr_cnt = logging_state["sample_count"]
+                auto_retrain_state["status"] = "ACTIVE"
+                auto_retrain_state["last_retrain_time"] = artifact.get("trained_timestamp")
+                auto_retrain_state["samples_used"] = metrics.get("samples_used", 0)
+                auto_retrain_state["r2_score"] = metrics.get("r2_score")
+                auto_retrain_state["mae"] = metrics.get("mae")
+                auto_retrain_state["rmse"] = metrics.get("rmse")
+                auto_retrain_state["engine"] = metrics.get("engine", "Normal Equations")
+                auto_retrain_state["retrain_count"] += 1
+                auto_retrain_state["last_retrained_sample_count"] = curr_cnt
+                auto_retrain_state["message"] = f"Auto-retrained successfully ({metrics.get('samples_used')} pairs, R²={metrics.get('r2_score')})."
+        except Exception as e:
+            with state_lock:
+                auto_retrain_state["status"] = "ACTIVE"
+                auto_retrain_state["message"] = f"Retrain cycle skipped: {str(e)}"
+
+    worker_thread = threading.Thread(target=_worker, daemon=True)
+    worker_thread.start()
+    return worker_thread
+
+def auto_retrain_daemon_loop():
+    """
+    Autonomous background loop: periodically checks whether new telemetry
+    samples have accumulated in data/log.csv, and triggers model retraining.
+    """
+    global auto_retrain_state
+    while True:
+        time.sleep(10)
+        try:
+            with state_lock:
+                enabled = auto_retrain_state["enabled"]
+                status = auto_retrain_state["status"]
+                current_cnt = logging_state["sample_count"]
+                last_cnt = auto_retrain_state["last_retrained_sample_count"]
+                thresh = auto_retrain_state["trigger_interval_samples"]
+
+            if not enabled or status == "TRAINING":
+                continue
+
+            # Retrain if:
+            # 1. No retrain has ever occurred and we have accumulated >= 20 samples
+            # 2. Accumulated >= trigger_interval_samples (e.g. 30 samples) since last retrain
+            if (last_cnt == 0 and current_cnt >= 20) or ((current_cnt - last_cnt) >= thresh):
+                execute_background_retrain(reason=f"+{current_cnt - last_cnt} new samples")
+        except Exception:
+            continue
 
 # --- UDP TELEMETRY LISTENER ---
 def udp_listener():
@@ -260,9 +363,12 @@ def get_csv_sample_count():
 
 # --- BACKGROUND DAEMON (PREDICTION, CONTROL, AND CSV LOGGING) ---
 def background_daemon_loop():
-    global control_state, logging_state, telemetry_history
+    global control_state, logging_state, telemetry_history, auto_retrain_state
     init_csv_log()
-    logging_state["sample_count"] = get_csv_sample_count()
+    cnt = get_csv_sample_count()
+    logging_state["sample_count"] = cnt
+    if auto_retrain_state["last_retrained_sample_count"] == 0:
+        auto_retrain_state["last_retrained_sample_count"] = cnt
 
     while True:
         time.sleep(2)
@@ -563,6 +669,11 @@ def index():
     fan_rationale = compute_fan_rationale(is_online, cur_mq, last_pred, thresh, rep_fan, rep_src, curr_decision)
     compact_pipe = compute_compact_pipeline(is_online, cur_mq, cpu_val, last_pred, thresh, rep_fan, rep_src)
 
+    with state_lock:
+        ar_stat = dict(auto_retrain_state)
+        curr_log_samples = logging_state["sample_count"]
+    ar_stat["samples_since_retrain"] = max(0, curr_log_samples - ar_stat.get("last_retrained_sample_count", 0))
+
     initial_state = {
         "esp32": {
             "online": is_online,
@@ -579,6 +690,7 @@ def index():
             "matches": heavy_matches
         },
         "model": model_info,
+        "auto_retrain": ar_stat,
         "control": {
             "decision": curr_decision,
             "latest_command_sent": last_cmd,
@@ -608,6 +720,8 @@ def api_data():
         last_cmd = control_state["latest_command_sent"]
         log_stat = dict(logging_state)
         hist_list = list(telemetry_history)
+        ar_stat = dict(auto_retrain_state)
+        curr_log_samples = logging_state["sample_count"]
 
     is_online = (last_t is not None) and ((now - last_t) <= 10.0)
     seconds_since = round(now - last_t, 1) if last_t is not None else None
@@ -639,6 +753,8 @@ def api_data():
     fan_rationale = compute_fan_rationale(is_online, cur_mq, last_pred, thresh, rep_fan, rep_src, curr_decision)
     compact_pipe = compute_compact_pipeline(is_online, cur_mq, cpu_val, last_pred, thresh, rep_fan, rep_src)
 
+    ar_stat["samples_since_retrain"] = max(0, curr_log_samples - ar_stat.get("last_retrained_sample_count", 0))
+
     return jsonify({
         "esp32": {
             "online": is_online,
@@ -656,6 +772,7 @@ def api_data():
             "matches": heavy_matches
         },
         "model": model_info,
+        "auto_retrain": ar_stat,
         "control": {
             "decision": curr_decision,
             "latest_command_sent": last_cmd,
@@ -667,6 +784,22 @@ def api_data():
         "pipeline": pipeline,
         "logging": log_stat,
         "history": hist_list
+    })
+
+@app.route("/api/retrain", methods=["POST", "GET"])
+def api_retrain():
+    with state_lock:
+        if auto_retrain_state["status"] == "TRAINING":
+            return jsonify({
+                "success": False,
+                "status": "TRAINING",
+                "message": "Retraining is already running in background."
+            })
+    execute_background_retrain(reason="Manual API/UI Trigger")
+    return jsonify({
+        "success": True,
+        "status": "TRAINING",
+        "message": "Background retraining initiated."
     })
 
 @app.route("/download/log.csv")
@@ -690,5 +823,9 @@ if __name__ == "__main__":
     # Start background daemon for control & CSV logging
     bg_thread = threading.Thread(target=background_daemon_loop, daemon=True)
     bg_thread.start()
+
+    # Start autonomous background auto-retraining daemon
+    retrain_thread = threading.Thread(target=auto_retrain_daemon_loop, daemon=True)
+    retrain_thread.start()
 
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=True)

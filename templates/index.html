@@ -395,7 +395,7 @@
                             <span class="summary-sub">Technical details, dispatch log, and model weights</span>
                         </summary>
                         <div class="diagnostics-body">
-                            <div class="diag-two-col">
+                            <div class="diag-grid">
                                 <!-- Recent Host UDP Dispatch -->
                                 <div class="diag-box">
                                     <div class="diag-box-title">Recent Host UDP Command</div>
@@ -448,6 +448,58 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+
+                                <!-- Autonomous Background Retraining Daemon -->
+                                <div class="diag-box" id="diag-retrain-card">
+                                    <div class="diag-box-header-row">
+                                        <div class="diag-box-title">Autonomous Retraining</div>
+                                        <span id="diag-retrain-badge" class="diag-status-pill {% if s.auto_retrain.status == 'TRAINING' %}status-retraining{% else %}status-active-auto{% endif %}">
+                                            {{ s.auto_retrain.status if s.auto_retrain.status == 'TRAINING' else 'ACTIVE (AUTO)' }}
+                                        </span>
+                                    </div>
+                                    <table class="diag-table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Retrain Mode</td>
+                                                <td>Background Daemon</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Auto Policy</td>
+                                                <td>Every ~30 samples (~60s)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Last Retrained</td>
+                                                <td id="diag-retrain-time">{{ s.auto_retrain.last_retrain_time or 'Pending first cycle' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Supervised Pairs</td>
+                                                <td id="diag-retrain-samples">{{ s.auto_retrain.samples_used }} pairs</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fit Quality (R²)</td>
+                                                <td id="diag-retrain-r2">{% if s.auto_retrain.r2_score is not none %}{{ s.auto_retrain.r2_score }}{% else %}—{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mean Error (MAE)</td>
+                                                <td id="diag-retrain-mae">{% if s.auto_retrain.mae is not none %}{{ s.auto_retrain.mae }} ADC{% else %}—{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hot-Reload State</td>
+                                                <td>Zero-Downtime Live Reload</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="diag-retrain-action-row">
+                                        <button type="button" id="btn-manual-retrain" class="btn-retrain-action" title="Trigger an immediate background retrain cycle">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                                <polyline points="23 4 23 10 17 10"></polyline>
+                                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                            </svg>
+                                            <span>Retrain Now</span>
+                                        </button>
+                                        <span id="retrain-feedback-msg" class="retrain-feedback-text"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

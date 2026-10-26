@@ -314,6 +314,48 @@ function updateDashboard() {
                 if (diagCmdStatus) diagCmdStatus.textContent = "—";
             }
 
+            // Diagnostics Auto-Retrain Card
+            if (data.auto_retrain) {
+                const ar = data.auto_retrain;
+                const retrainBadge = document.getElementById("diag-retrain-badge");
+                const retrainTime = document.getElementById("diag-retrain-time");
+                const retrainSamples = document.getElementById("diag-retrain-samples");
+                const retrainR2 = document.getElementById("diag-retrain-r2");
+                const retrainMae = document.getElementById("diag-retrain-mae");
+                const retrainBtn = document.getElementById("btn-manual-retrain");
+                const retrainFeedback = document.getElementById("retrain-feedback-msg");
+
+                if (retrainBadge) {
+                    if (ar.status === "TRAINING") {
+                        retrainBadge.className = "diag-status-pill status-retraining";
+                        retrainBadge.textContent = "TRAINING...";
+                        if (retrainBtn) retrainBtn.disabled = true;
+                        if (retrainFeedback) retrainFeedback.textContent = "Retraining in background...";
+                    } else if (ar.status === "ACTIVE") {
+                        retrainBadge.className = "diag-status-pill status-active-auto";
+                        retrainBadge.textContent = "ACTIVE (AUTO)";
+                        if (retrainBtn) retrainBtn.disabled = false;
+                    } else if (ar.status === "ERROR") {
+                        retrainBadge.className = "diag-status-pill status-retraining";
+                        retrainBadge.textContent = "ERROR";
+                        if (retrainBtn) retrainBtn.disabled = false;
+                    }
+                }
+
+                if (retrainTime && ar.last_retrain_time) {
+                    retrainTime.textContent = ar.last_retrain_time;
+                }
+                if (retrainSamples && ar.samples_used !== undefined) {
+                    retrainSamples.textContent = `${ar.samples_used} pairs`;
+                }
+                if (retrainR2) {
+                    retrainR2.textContent = ar.r2_score !== null && ar.r2_score !== undefined ? `${ar.r2_score}` : "—";
+                }
+                if (retrainMae) {
+                    retrainMae.textContent = ar.mae !== null && ar.mae !== undefined ? `${ar.mae} ADC` : "—";
+                }
+            }
+
             // Live Monitor Tab 1 Quick Decision
             const quickDecisionBadge = document.getElementById("quick-decision-badge");
             const quickDecisionSub = document.getElementById("quick-decision-sub");
@@ -649,6 +691,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     updateDashboard();
     setInterval(updateDashboard, 2000);
+
+    // Manual Retrain Trigger Button
+    const retrainBtn = document.getElementById("btn-manual-retrain");
+    if (retrainBtn) {
+        retrainBtn.addEventListener("click", () => {
+            retrainBtn.disabled = true;
+            const feedback = document.getElementById("retrain-feedback-msg");
+            if (feedback) feedback.textContent = "Initiating background retraining...";
+            fetch("/api/retrain", { method: "POST" })
+                .then(res => res.json())
+                .then(result => {
+                    if (feedback) {
+                        feedback.textContent = result.message || "Training initiated...";
+                    }
+                    setTimeout(() => {
+                        if (feedback && feedback.textContent.includes("initiated")) {
+                            feedback.textContent = "";
+                        }
+                    }, 4000);
+                })
+                .catch(err => {
+                    if (feedback) feedback.textContent = "Request failed: " + err.message;
+                    retrainBtn.disabled = false;
+                });
+        });
+    }
 
     window.addEventListener("resize", () => {
         if (cachedHistory.length > 0) {

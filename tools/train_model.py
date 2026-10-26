@@ -180,15 +180,21 @@ def train_pure_python(X, y, alpha=ALPHA):
 
     return intercept, coeffs, r2, mae, rmse
 
-def train_and_export():
+def train_and_export(csv_path=None, model_out_path=None):
+    csv_file = csv_path or CSV_PATH
+    out_file = model_out_path or MODEL_OUT_PATH
+
     print("==================================================")
     print(" AeroOS - Telemetry Ridge Regression Trainer")
     print("==================================================")
-    print(f"Reading telemetry log from: {CSV_PATH}")
+    print(f"Reading telemetry log from: {csv_file}")
 
-    X, y = load_dataset(CSV_PATH)
+    X, y = load_dataset(csv_file)
     n_pairs = len(X)
     print(f"Valid supervised sample pairs (t -> t+{HORIZON_SECONDS}s): {n_pairs}")
+
+    if n_pairs < 15:
+        raise ValueError(f"Insufficient supervised data pairs ({n_pairs}). At least 15 pairs required.")
 
     if n_pairs < 30:
         print("Warning: Dataset is small (< 30 samples). Training on available data.")
@@ -249,13 +255,15 @@ def train_and_export():
         "intercept": round(intercept, 4)
     }
 
-    os.makedirs(os.path.dirname(MODEL_OUT_PATH), exist_ok=True)
-    with open(MODEL_OUT_PATH, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)
+    with open(out_file, "w", encoding="utf-8") as f:
         json.dump(model_artifact, f, indent=2)
 
     print(f"\n[OK] Model exported successfully to:")
-    print(f"     {MODEL_OUT_PATH}")
+    print(f"     {out_file}")
     print("AeroOS backend will dynamically detect the updated model on next inference cycle.")
+
+    return model_artifact
 
 if __name__ == "__main__":
     train_and_export()
