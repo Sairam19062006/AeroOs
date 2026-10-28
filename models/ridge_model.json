@@ -8,7 +8,7 @@
   "threshold_unit": "raw ADC",
   "regularization_alpha": 1.0,
   "training_dataset": "AeroOS Environmental Telemetry",
-  "trained_timestamp": "2026-10-27 00:13:14",
+  "trained_timestamp": "2026-10-28 17:57:21",
   "training_metrics": {
     "samples_used": 237,
     "r2_score": 0.8793,

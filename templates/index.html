@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AeroOS - Telemetry-Driven Feed-Forward Micro-Ventilation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <div class="app-layout">
         <!-- Left Sidebar Navigation -->
@@ -13,7 +15,7 @@
             <div class="sidebar-brand">
                 <div class="brand-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                     </svg>
                 </div>
                 <div class="brand-text">
@@ -25,7 +27,8 @@
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-tab="tab-live" id="nav-btn-live">
                     <span class="nav-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                         </svg>
                     </span>
@@ -35,9 +38,12 @@
 
                 <button class="nav-item" data-tab="tab-predictive" id="nav-btn-predictive">
                     <span class="nav-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
                         </svg>
                     </span>
                     <span class="nav-label">Predictive Engine</span>
@@ -46,7 +52,8 @@
 
                 <button class="nav-item" data-tab="tab-trends" id="nav-btn-trends">
                     <span class="nav-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <line x1="18" y1="20" x2="18" y2="10"></line>
                             <line x1="12" y1="20" x2="12" y2="4"></line>
                             <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -58,7 +65,8 @@
 
                 <button class="nav-item" data-tab="tab-processes" id="nav-btn-processes">
                     <span class="nav-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                             <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
                             <line x1="6" y1="6" x2="6.01" y2="6"></line>
@@ -71,7 +79,8 @@
 
                 <button class="nav-item" data-tab="tab-logs" id="nav-btn-logs">
                     <span class="nav-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -91,7 +100,8 @@
             <header class="app-topbar">
                 <div class="topbar-left">
                     <button class="mobile-sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -107,20 +117,21 @@
                 <div class="topbar-right">
                     {% set esp_online = s.esp32.online %}
                     {% set esp_has_data = s.esp32.has_received_data %}
-                    
+
                     <!-- ESP32 Status -->
                     <div class="topbar-status-chip">
                         <span class="status-chip-label">ESP32</span>
-                        <span id="esp32-status-pill" class="status-pill {% if esp_online %}status-online{% else %}status-offline{% endif %}">
+                        <span id="esp32-status-pill"
+                            class="status-pill {% if esp_online %}status-online{% else %}status-offline{% endif %}">
                             {% if esp_online %}ONLINE{% else %}OFFLINE{% endif %}
                         </span>
                         <span id="esp32-status-age" class="status-chip-sub">
                             {% if esp_online and s.esp32.seconds_since_last is not none %}
-                                {{ s.esp32.seconds_since_last }}s ago
+                            {{ s.esp32.seconds_since_last }}s ago
                             {% elif not esp_online and esp_has_data and s.esp32.seconds_since_last is not none %}
-                                last: {{ s.esp32.seconds_since_last }}s
+                            last: {{ s.esp32.seconds_since_last }}s
                             {% else %}
-                                No data
+                            No data
                             {% endif %}
                         </span>
                     </div>
@@ -135,14 +146,16 @@
                     {% set m_stat = s.model.status %}
                     <div class="topbar-status-chip">
                         <span class="status-chip-label">Model</span>
-                        <span id="model-status-pill" class="status-pill {% if m_stat == 'LOADED' %}status-online{% elif m_stat == 'NOT LOADED' %}status-amber{% else %}status-offline{% endif %}">
+                        <span id="model-status-pill"
+                            class="status-pill {% if m_stat == 'LOADED' %}status-online{% elif m_stat == 'NOT LOADED' %}status-amber{% else %}status-offline{% endif %}">
                             {{ m_stat }}
                         </span>
                     </div>
 
                     <!-- Quick CSV Download -->
                     <a href="/download/log.csv" class="topbar-action-btn" title="Download Telemetry Log (CSV)">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
                             <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -158,98 +171,115 @@
             </div>
 
             <!-- Global ESP32 Stale / Offline Notification Banner (Matches Reference) -->
-            <div id="stale-warning-banner" class="global-banner offline-banner {% if esp_online or not esp_has_data %}hidden{% endif %}">
+            <div id="stale-warning-banner"
+                class="global-banner offline-banner {% if esp_online or not esp_has_data %}hidden{% endif %}">
                 <span class="banner-bullet">•))</span>
-                <span id="stale-banner-text">ESP32 MONITORING NODE IS OFFLINE • DISPLAYING LAST CONFIRMED HISTORICAL TELEMETRY</span>
+                <span id="stale-banner-text">ESP32 MONITORING NODE IS OFFLINE • DISPLAYING LAST CONFIRMED HISTORICAL
+                    TELEMETRY</span>
             </div>
 
             <!-- Scrollable Content Area -->
             <div class="app-content-body">
-                
+
                 <!-- TAB 1: LIVE MONITOR -->
                 <section id="tab-live" class="tab-panel active">
                     <div class="panel-header-block">
                         <div class="panel-tag">REAL-TIME TELEMETRY</div>
                         <h2 class="panel-heading">Environmental Intelligence</h2>
-                        <p class="panel-desc">Real-time sensor telemetry ingested from ESP32 microcontroller over local UDP. MQ-135 is an uncalibrated relative ADC indicator (0–4095), not a calibrated CO₂ ppm concentration.</p>
+                        <p class="panel-desc">Real-time sensor telemetry ingested from ESP32 microcontroller over local
+                            UDP. MQ-135 is an uncalibrated relative ADC indicator (0–4095), not a calibrated CO₂ ppm
+                            concentration.</p>
                     </div>
 
                     {% set vals = s.esp32['values'] if s.esp32['values'] else none %}
                     {% set mq = vals['mq135'] if vals and vals['mq135'] is defined else none %}
-                    {% set mq_class = 'card-gas-green' if mq and mq < 800 else ('card-gas-amber' if mq and mq <= 1000 else ('card-gas-red' if mq else '')) %}
+                    {% set mq_class = 'card-gas-green' if mq and mq < 800 else ('card-gas-amber' if mq and mq <=1000
+                        else ('card-gas-red' if mq else '' )) %} <!-- 6 Sensor Cards Grid -->
+                        <div class="sensor-cards-grid {% if not esp_online %}cards-offline{% endif %}"
+                            id="sensor-cards-container">
+                            <!-- Card 1: MQ-135 -->
+                            <div class="metric-card {{ mq_class }}" id="card-mq135">
+                                <div class="metric-label">Gas Level (MQ-135 Raw)</div>
+                                <div class="metric-value" id="val-mq135">{{ mq if mq is not none else '—' }}</div>
+                                <div class="metric-subtext" id="subtext-mq135">Raw ADC • &lt;800 normal, 800–1000
+                                    elevated, &gt;1000 high</div>
+                            </div>
 
-                    <!-- 6 Sensor Cards Grid -->
-                    <div class="sensor-cards-grid {% if not esp_online %}cards-offline{% endif %}" id="sensor-cards-container">
-                        <!-- Card 1: MQ-135 -->
-                        <div class="metric-card {{ mq_class }}" id="card-mq135">
-                            <div class="metric-label">Gas Level (MQ-135 Raw)</div>
-                            <div class="metric-value" id="val-mq135">{{ mq if mq is not none else '—' }}</div>
-                            <div class="metric-subtext" id="subtext-mq135">Raw ADC • &lt;800 normal, 800–1000 elevated, &gt;1000 high</div>
-                        </div>
+                            <!-- Card 2: Temperature -->
+                            <div class="metric-card" id="card-temp">
+                                <div class="metric-label">Temperature</div>
+                                <div class="metric-value" id="val-temp">{{ (vals['temp'] ~ ' °C') if vals and
+                                    vals['temp'] is defined else '—' }}</div>
+                                <div class="metric-subtext">Ambient DHT22 sensor</div>
+                            </div>
 
-                        <!-- Card 2: Temperature -->
-                        <div class="metric-card" id="card-temp">
-                            <div class="metric-label">Temperature</div>
-                            <div class="metric-value" id="val-temp">{{ (vals['temp'] ~ ' °C') if vals and vals['temp'] is defined else '—' }}</div>
-                            <div class="metric-subtext">Ambient DHT22 sensor</div>
-                        </div>
+                            <!-- Card 3: Humidity -->
+                            <div class="metric-card" id="card-hum">
+                                <div class="metric-label">Relative Humidity</div>
+                                <div class="metric-value" id="val-hum">{{ (vals['hum'] ~ ' %') if vals and vals['hum']
+                                    is defined else '—' }}</div>
+                                <div class="metric-subtext">Relative percentage</div>
+                            </div>
 
-                        <!-- Card 3: Humidity -->
-                        <div class="metric-card" id="card-hum">
-                            <div class="metric-label">Relative Humidity</div>
-                            <div class="metric-value" id="val-hum">{{ (vals['hum'] ~ ' %') if vals and vals['hum'] is defined else '—' }}</div>
-                            <div class="metric-subtext">Relative percentage</div>
-                        </div>
+                            <!-- Card 4: Occupancy -->
+                            <div class="metric-card" id="card-pir">
+                                <div class="metric-label">Desk Occupancy</div>
+                                <div class="metric-value" id="val-pir">{% if vals and vals['pir'] is defined %}{{
+                                    'Occupied' if vals['pir'] == 1 else 'Empty' }}{% else %}—{% endif %}</div>
+                                <div class="metric-subtext">Passive Infrared (PIR)</div>
+                            </div>
 
-                        <!-- Card 4: Occupancy -->
-                        <div class="metric-card" id="card-pir">
-                            <div class="metric-label">Desk Occupancy</div>
-                            <div class="metric-value" id="val-pir">{% if vals and vals['pir'] is defined %}{{ 'Occupied' if vals['pir'] == 1 else 'Empty' }}{% else %}—{% endif %}</div>
-                            <div class="metric-subtext">Passive Infrared (PIR)</div>
-                        </div>
+                            <!-- Card 5: Fan / Relay -->
+                            <div class="metric-card" id="card-fan">
+                                <div class="metric-label">Relay / Fan Actuator</div>
+                                <div class="metric-value" id="val-fan">{% if vals and vals['fan'] is defined %}{{ 'ON'
+                                    if vals['fan'] == 1 else 'OFF' }}{% else %}—{% endif %}</div>
+                                <div class="metric-subtext">Actuator state reported by node</div>
+                            </div>
 
-                        <!-- Card 5: Fan / Relay -->
-                        <div class="metric-card" id="card-fan">
-                            <div class="metric-label">Relay / Fan Actuator</div>
-                            <div class="metric-value" id="val-fan">{% if vals and vals['fan'] is defined %}{{ 'ON' if vals['fan'] == 1 else 'OFF' }}{% else %}—{% endif %}</div>
-                            <div class="metric-subtext">Actuator state reported by node</div>
-                        </div>
-
-                        <!-- Card 6: Actuation Source -->
-                        <div class="metric-card" id="card-src">
-                            <div class="metric-label">Actuation Authority</div>
-                            <div class="metric-value" id="val-src">{% if vals and vals['src'] is defined %}{% if vals['src'] == 0 %}Off{% elif vals['src'] == 1 %}Pre-emptive (Host){% elif vals['src'] == 2 %}Local Threshold{% else %}Code {{ vals['src'] }}{% endif %}{% else %}—{% endif %}</div>
-                            <div class="metric-subtext">Triggering mechanism</div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Live System Status Summary -->
-                    <div class="live-summary-cards">
-                        <div class="summary-card">
-                            <div class="summary-card-title">Host CPU Utilization</div>
-                            <div class="summary-card-val" id="quick-cpu-val">{% if s.system.cpu_ready %}{{ s.system.cpu_percent }}%{% else %}Collecting...{% endif %}</div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill" id="quick-cpu-bar" style="width: {{ s.system.cpu_percent }}%;"></div>
+                            <!-- Card 6: Actuation Source -->
+                            <div class="metric-card" id="card-src">
+                                <div class="metric-label">Actuation Authority</div>
+                                <div class="metric-value" id="val-src">{% if vals and vals['src'] is defined %}{% if
+                                    vals['src'] == 0 %}Off{% elif vals['src'] == 1 %}Pre-emptive (Host){% elif
+                                    vals['src'] == 2 %}Local Threshold{% else %}Code {{ vals['src'] }}{% endif %}{% else
+                                    %}—{% endif %}</div>
+                                <div class="metric-subtext">Triggering mechanism</div>
                             </div>
                         </div>
-                        <div class="summary-card">
-                            <div class="summary-card-title">Host RAM Utilization</div>
-                            <div class="summary-card-val" id="quick-ram-val">{{ s.system.ram_percent }}%</div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill" id="quick-ram-bar" style="width: {{ s.system.ram_percent }}%;"></div>
+
+                        <!-- Quick Live System Status Summary -->
+                        <div class="live-summary-cards">
+                            <div class="summary-card">
+                                <div class="summary-card-title">Host CPU Utilization</div>
+                                <div class="summary-card-val" id="quick-cpu-val">{% if s.system.cpu_ready %}{{
+                                    s.system.cpu_percent }}%{% else %}Collecting...{% endif %}</div>
+                                <div class="progress-bar-track">
+                                    <div class="progress-bar-fill" id="quick-cpu-bar"
+                                        style="width: {{ s.system.cpu_percent }}%;"></div>
+                                </div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-card-title">Host RAM Utilization</div>
+                                <div class="summary-card-val" id="quick-ram-val">{{ s.system.ram_percent }}%</div>
+                                <div class="progress-bar-track">
+                                    <div class="progress-bar-fill" id="quick-ram-bar"
+                                        style="width: {{ s.system.ram_percent }}%;"></div>
+                                </div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-card-title">Feed-Forward Decision</div>
+                                <div class="summary-card-val">
+                                    {% set dec = s.control.decision %}
+                                    <span id="quick-decision-badge"
+                                        class="decision-badge {% if dec == 'PRE-EMPTIVE' %}dec-preemptive{% elif dec == 'REACTIVE FALLBACK' %}dec-reactive{% else %}dec-idle{% endif %}">
+                                        {{ dec }}
+                                    </span>
+                                </div>
+                                <div class="summary-card-sub" id="quick-decision-sub">Threshold: {{ s.model.threshold }}
+                                    raw ADC</div>
                             </div>
                         </div>
-                        <div class="summary-card">
-                            <div class="summary-card-title">Feed-Forward Decision</div>
-                            <div class="summary-card-val">
-                                {% set dec = s.control.decision %}
-                                <span id="quick-decision-badge" class="decision-badge {% if dec == 'PRE-EMPTIVE' %}dec-preemptive{% elif dec == 'REACTIVE FALLBACK' %}dec-reactive{% else %}dec-idle{% endif %}">
-                                    {{ dec }}
-                                </span>
-                            </div>
-                            <div class="summary-card-sub" id="quick-decision-sub">Threshold: {{ s.model.threshold }} raw ADC</div>
-                        </div>
-                    </div>
                 </section>
 
                 <!-- TAB 2: PREDICTIVE ENGINE (MINIMAL, 5-SECOND UNDERSTANDABLE) -->
@@ -265,7 +295,8 @@
                                 <span class="hero-origin-tag">ESP32 Telemetry</span>
                             </div>
                             <div class="hero-card-val-row">
-                                <span class="hero-card-val" id="pred-current-mq">{% if is_online and vals and vals['mq135'] is defined %}{{ vals['mq135'] }}{% else %}—{% endif %}</span>
+                                <span class="hero-card-val" id="pred-current-mq">{% if is_online and vals and
+                                    vals['mq135'] is defined %}{{ vals['mq135'] }}{% else %}—{% endif %}</span>
                                 <span class="hero-card-unit">raw ADC</span>
                             </div>
                             <div class="hero-card-footer">
@@ -280,7 +311,8 @@
                                 <span class="hero-origin-tag">Ridge Regression</span>
                             </div>
                             <div class="hero-card-val-row">
-                                <span class="hero-card-val" id="pred-val-display">{% if s.model.predicted_value is not none %}{{ s.model.predicted_value }}{% else %}—{% endif %}</span>
+                                <span class="hero-card-val" id="pred-val-display">{% if s.model.predicted_value is not
+                                    none %}{{ s.model.predicted_value }}{% else %}—{% endif %}</span>
                                 <span class="hero-card-unit">raw ADC</span>
                             </div>
                             <div class="hero-card-footer" id="pred-val-sub">
@@ -297,18 +329,21 @@
                             <div class="hero-card-val-row">
                                 <span class="hero-card-val" id="pred-fan-state">
                                     {% if is_online and s.control.reported_fan is not none %}
-                                        {{ 'ON' if s.control.reported_fan == 1 else 'OFF' }}
+                                    {{ 'ON' if s.control.reported_fan == 1 else 'OFF' }}
                                     {% else %}
-                                        —
+                                    —
                                     {% endif %}
                                 </span>
-                                <span class="hero-source-badge {% if is_online and s.control.reported_fan == 1 %}{% if s.control.reported_source == 1 %}badge-preemptive{% elif s.control.reported_source == 2 %}badge-reactive{% else %}badge-idle{% endif %}{% else %}badge-idle{% endif %}" id="pred-fan-source-badge">
+                                <span
+                                    class="hero-source-badge {% if is_online and s.control.reported_fan == 1 %}{% if s.control.reported_source == 1 %}badge-preemptive{% elif s.control.reported_source == 2 %}badge-reactive{% else %}badge-idle{% endif %}{% else %}badge-idle{% endif %}"
+                                    id="pred-fan-source-badge">
                                     {% if is_online and s.control.reported_fan == 1 %}
-                                        {% if s.control.reported_source == 1 %}Pre-emptive (Host){% elif s.control.reported_source == 2 %}Local Safety Fallback{% else %}Override{% endif %}
+                                    {% if s.control.reported_source == 1 %}Pre-emptive (Host){% elif
+                                    s.control.reported_source == 2 %}Local Safety Fallback{% else %}Override{% endif %}
                                     {% elif is_online %}
-                                        Idle (Standby)
+                                    Idle (Standby)
                                     {% else %}
-                                        Offline
+                                    Offline
                                     {% endif %}
                                 </span>
                             </div>
@@ -339,7 +374,8 @@
                                 <div class="stage-body">
                                     <div class="stage-name">Telemetry Ingestion</div>
                                     <div class="stage-detail" id="stage-telemetry-detail">
-                                        MQ-135: {% if is_online and vals and vals['mq135'] is defined %}{{ vals['mq135'] }}{% else %}—{% endif %} • CPU: {{ s.system.cpu_percent }}%
+                                        MQ-135: {% if is_online and vals and vals['mq135'] is defined %}{{ vals['mq135']
+                                        }}{% else %}—{% endif %} • CPU: {{ s.system.cpu_percent }}%
                                     </div>
                                 </div>
                             </div>
@@ -347,15 +383,16 @@
                             <div class="stage-arrow">→</div>
 
                             <!-- Stage 2 -->
-                            <div class="compact-stage {% if s.model.predicted_value is not none and s.model.predicted_value >= s.model.threshold %}stage-active{% endif %}" id="stage-prediction">
+                            <div class="compact-stage {% if s.model.predicted_value is not none and s.model.predicted_value >= s.model.threshold %}stage-active{% endif %}"
+                                id="stage-prediction">
                                 <div class="stage-index">2</div>
                                 <div class="stage-body">
                                     <div class="stage-name">Ridge Forecast (+30s)</div>
                                     <div class="stage-detail" id="stage-prediction-detail">
                                         {% if s.model.predicted_value is not none %}
-                                            Forecast: {{ s.model.predicted_value }} vs {{ s.model.threshold }} Threshold
+                                        Forecast: {{ s.model.predicted_value }} vs {{ s.model.threshold }} Threshold
                                         {% else %}
-                                            Awaiting Telemetry
+                                        Awaiting Telemetry
                                         {% endif %}
                                     </div>
                                 </div>
@@ -364,18 +401,20 @@
                             <div class="stage-arrow">→</div>
 
                             <!-- Stage 3 -->
-                            <div class="compact-stage {% if is_online and s.control.reported_fan == 1 %}stage-active{% endif %}" id="stage-ventilation">
+                            <div class="compact-stage {% if is_online and s.control.reported_fan == 1 %}stage-active{% endif %}"
+                                id="stage-ventilation">
                                 <div class="stage-index">3</div>
                                 <div class="stage-body">
                                     <div class="stage-name">Ventilation Actuator</div>
                                     <div class="stage-detail" id="stage-ventilation-detail">
                                         {% if is_online and s.control.reported_fan is not none %}
-                                            Fan: {{ 'ON' if s.control.reported_fan == 1 else 'OFF' }}
-                                            {% if s.control.reported_fan == 1 %}
-                                                ({{ 'Pre-emptive Host' if s.control.reported_source == 1 else ('Safety Fallback' if s.control.reported_source == 2 else 'Active') }})
-                                            {% endif %}
+                                        Fan: {{ 'ON' if s.control.reported_fan == 1 else 'OFF' }}
+                                        {% if s.control.reported_fan == 1 %}
+                                        ({{ 'Pre-emptive Host' if s.control.reported_source == 1 else ('Safety Fallback'
+                                        if s.control.reported_source == 2 else 'Active') }})
+                                        {% endif %}
                                         {% else %}
-                                            Actuator Offline
+                                        Actuator Offline
                                         {% endif %}
                                     </div>
                                 </div>
@@ -387,7 +426,8 @@
                     <details class="diagnostics-accordion" id="diag-accordion">
                         <summary class="diagnostics-summary">
                             <span class="summary-left">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="diag-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" class="diag-icon">
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
                                 <span>Advanced Diagnostics & Command Log</span>
@@ -403,21 +443,25 @@
                                         <tbody>
                                             <tr>
                                                 <td>Latest Command</td>
-                                                <td id="diag-cmd-name">{{ s.control.latest_command_sent.command if s.control.latest_command_sent else 'None sent yet' }}</td>
+                                                <td id="diag-cmd-name">{{ s.control.latest_command_sent.command if
+                                                    s.control.latest_command_sent else 'None sent yet' }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Dispatch Timestamp</td>
-                                                <td id="diag-cmd-ts">{{ s.control.latest_command_sent.timestamp if s.control.latest_command_sent else '—' }}</td>
+                                                <td id="diag-cmd-ts">{{ s.control.latest_command_sent.timestamp if
+                                                    s.control.latest_command_sent else '—' }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Target Endpoint</td>
-                                                <td id="diag-cmd-target">{{ s.control.latest_command_sent.target if s.control.latest_command_sent else '—' }}</td>
+                                                <td id="diag-cmd-target">{{ s.control.latest_command_sent.target if
+                                                    s.control.latest_command_sent else '—' }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Socket Delivery</td>
                                                 <td id="diag-cmd-status">
                                                     {% if s.control.latest_command_sent %}
-                                                        {{ 'Transmitted' if s.control.latest_command_sent.transmitted else 'Failed' }}
+                                                    {{ 'Transmitted' if s.control.latest_command_sent.transmitted else
+                                                    'Failed' }}
                                                     {% else %}—{% endif %}
                                                 </td>
                                             </tr>
@@ -454,8 +498,10 @@
                                 <div class="diag-box" id="diag-retrain-card">
                                     <div class="diag-box-header-row">
                                         <div class="diag-box-title">Autonomous Retraining</div>
-                                        <span id="diag-retrain-badge" class="diag-status-pill {% if s.auto_retrain.status == 'TRAINING' %}status-retraining{% else %}status-active-auto{% endif %}">
-                                            {{ s.auto_retrain.status if s.auto_retrain.status == 'TRAINING' else 'ACTIVE (AUTO)' }}
+                                        <span id="diag-retrain-badge"
+                                            class="diag-status-pill {% if s.auto_retrain.status == 'TRAINING' %}status-retraining{% else %}status-active-auto{% endif %}">
+                                            {{ s.auto_retrain.status if s.auto_retrain.status == 'TRAINING' else 'ACTIVE
+                                            (AUTO)' }}
                                         </span>
                                     </div>
                                     <table class="diag-table">
@@ -470,19 +516,23 @@
                                             </tr>
                                             <tr>
                                                 <td>Last Retrained</td>
-                                                <td id="diag-retrain-time">{{ s.auto_retrain.last_retrain_time or 'Pending first cycle' }}</td>
+                                                <td id="diag-retrain-time">{{ s.auto_retrain.last_retrain_time or
+                                                    'Pending first cycle' }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Supervised Pairs</td>
-                                                <td id="diag-retrain-samples">{{ s.auto_retrain.samples_used }} pairs</td>
+                                                <td id="diag-retrain-samples">{{ s.auto_retrain.samples_used }} pairs
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Fit Quality (R²)</td>
-                                                <td id="diag-retrain-r2">{% if s.auto_retrain.r2_score is not none %}{{ s.auto_retrain.r2_score }}{% else %}—{% endif %}</td>
+                                                <td id="diag-retrain-r2">{% if s.auto_retrain.r2_score is not none %}{{
+                                                    s.auto_retrain.r2_score }}{% else %}—{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <td>Mean Error (MAE)</td>
-                                                <td id="diag-retrain-mae">{% if s.auto_retrain.mae is not none %}{{ s.auto_retrain.mae }} ADC{% else %}—{% endif %}</td>
+                                                <td id="diag-retrain-mae">{% if s.auto_retrain.mae is not none %}{{
+                                                    s.auto_retrain.mae }} ADC{% else %}—{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <td>Hot-Reload State</td>
@@ -491,8 +541,10 @@
                                         </tbody>
                                     </table>
                                     <div class="diag-retrain-action-row">
-                                        <button type="button" id="btn-manual-retrain" class="btn-retrain-action" title="Trigger an immediate background retrain cycle">
-                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <button type="button" id="btn-manual-retrain" class="btn-retrain-action"
+                                            title="Trigger an immediate background retrain cycle">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.2">
                                                 <polyline points="23 4 23 10 17 10"></polyline>
                                                 <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                                             </svg>
@@ -511,15 +563,20 @@
                     <div class="panel-header-block">
                         <div class="panel-tag">TIME-SERIES OBSERVATION</div>
                         <h2 class="panel-heading">Live Telemetry Trends</h2>
-                        <p class="panel-desc">Real-time dual-axis time-series visualization rendering host compute load alongside air quality raw ADC readings over a rolling 60-sample window.</p>
+                        <p class="panel-desc">Real-time dual-axis time-series visualization rendering host compute load
+                            alongside air quality raw ADC readings over a rolling 60-sample window.</p>
                     </div>
 
                     <div class="content-box">
                         <div class="chart-header-row">
                             <div class="chart-legend">
-                                <span class="legend-item"><span class="legend-box legend-cpu"></span> Host CPU (%)</span>
-                                <span class="legend-item"><span class="legend-box legend-mq"></span> MQ-135 Raw ADC</span>
-                                <span id="chart-sim-tag" class="chart-sim-tag {% if not s.esp32.is_simulated %}hidden{% endif %}">Simulated Telemetry</span>
+                                <span class="legend-item"><span class="legend-box legend-cpu"></span> Host CPU
+                                    (%)</span>
+                                <span class="legend-item"><span class="legend-box legend-mq"></span> MQ-135 Raw
+                                    ADC</span>
+                                <span id="chart-sim-tag"
+                                    class="chart-sim-tag {% if not s.esp32.is_simulated %}hidden{% endif %}">Simulated
+                                    Telemetry</span>
                             </div>
                             <div class="chart-meta-note">Left: CPU % • Right: MQ-135 ADC</div>
                         </div>
@@ -532,7 +589,9 @@
                         </div>
 
                         <p class="chart-disclaimer">
-                            <strong>Notice:</strong> MQ-135 raw response is an uncalibrated relative ADC indicator (0–4095). Telemetry is plotted directly from received UDP packets. When the ESP32 is offline, the sensor trace stops cleanly without fabricating zero values.
+                            <strong>Notice:</strong> MQ-135 raw response is an uncalibrated relative ADC indicator
+                            (0–4095). Telemetry is plotted directly from received UDP packets. When the ESP32 is
+                            offline, the sensor trace stops cleanly without fabricating zero values.
                         </p>
                     </div>
                 </section>
@@ -542,7 +601,9 @@
                     <div class="panel-header-block">
                         <div class="panel-tag">HOST WORKLOAD MONITOR</div>
                         <h2 class="panel-heading">System Telemetry & Background Processes</h2>
-                        <p class="panel-desc">Monitors host laptop resource allocation via psutil. Automatically detects recognized compilation and container workloads (gcc, g++, docker, python3) independently of raw CPU percentage.</p>
+                        <p class="panel-desc">Monitors host laptop resource allocation via psutil. Automatically detects
+                            recognized compilation and container workloads (gcc, g++, docker, python3) independently of
+                            raw CPU percentage.</p>
                     </div>
 
                     <!-- Host Metrics Cards -->
@@ -551,11 +612,13 @@
                             <div class="system-card-header">
                                 <span class="system-card-title">CPU Utilization</span>
                                 <span class="system-card-val" id="sys-cpu-val">
-                                    {% if s.system.cpu_ready %}{{ s.system.cpu_percent }}%{% else %}Collecting...{% endif %}
+                                    {% if s.system.cpu_ready %}{{ s.system.cpu_percent }}%{% else %}Collecting...{%
+                                    endif %}
                                 </span>
                             </div>
                             <div class="progress-bar-track">
-                                <div class="progress-bar-fill" id="sys-cpu-bar" style="width: {{ s.system.cpu_percent }}%;"></div>
+                                <div class="progress-bar-fill" id="sys-cpu-bar"
+                                    style="width: {{ s.system.cpu_percent }}%;"></div>
                             </div>
                             <div class="system-detail-line">Total host active compute load</div>
                         </div>
@@ -566,10 +629,12 @@
                                 <span class="system-card-val" id="sys-ram-val">{{ s.system.ram_percent }}%</span>
                             </div>
                             <div class="progress-bar-track">
-                                <div class="progress-bar-fill" id="sys-ram-bar" style="width: {{ s.system.ram_percent }}%;"></div>
+                                <div class="progress-bar-fill" id="sys-ram-bar"
+                                    style="width: {{ s.system.ram_percent }}%;"></div>
                             </div>
                             <div class="system-detail-line">
-                                Used: <strong id="sys-ram-details">{{ s.system.ram_used_mb }} MB / {{ s.system.ram_total_mb }} MB</strong>
+                                Used: <strong id="sys-ram-details">{{ s.system.ram_used_mb }} MB / {{
+                                    s.system.ram_total_mb }} MB</strong>
                             </div>
                         </div>
 
@@ -584,7 +649,8 @@
                             </div>
                             <div class="system-detail-row">
                                 <span class="detail-label">Recognized Heavy Task:</span>
-                                <span id="sys-heavy-badge" class="heavy-badge {% if s.heavy_task.running %}badge-yes{% else %}badge-no{% endif %}">
+                                <span id="sys-heavy-badge"
+                                    class="heavy-badge {% if s.heavy_task.running %}badge-yes{% else %}badge-no{% endif %}">
                                     {% if s.heavy_task.running %}YES{% else %}NO{% endif %}
                                 </span>
                             </div>
@@ -610,13 +676,13 @@
                                 <tbody id="processes-table-body">
                                     {% for p in s.processes %}
                                     {% set is_heavy = p.name.lower() in ['gcc', 'g++', 'docker', 'python3'] %}
-                                    <tr{% if is_heavy %} class="highlighted-process"{% endif %}>
+                                    <tr{% if is_heavy %} class="highlighted-process" {% endif %}>
                                         <td>{{ p.pid }}</td>
                                         <td>{{ p.name }}</td>
                                         <td>{{ p.cpu_percent }}%</td>
                                         <td>{{ p.ram_mb }}</td>
-                                    </tr>
-                                    {% endfor %}
+                                        </tr>
+                                        {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -628,33 +694,42 @@
                     <div class="panel-header-block">
                         <div class="panel-tag">PERSISTENCE & EXPORT</div>
                         <h2 class="panel-heading">Telemetry Logging & Data Integrity</h2>
-                        <p class="panel-desc">All telemetry samples, predictions, and actuation decisions are logged locally to CSV every 2 seconds. Host sampling timestamps remain distinct from ESP32 packet arrival times.</p>
+                        <p class="panel-desc">All telemetry samples, predictions, and actuation decisions are logged
+                            locally to CSV every 2 seconds. Host sampling timestamps remain distinct from ESP32 packet
+                            arrival times.</p>
                     </div>
 
                     <div class="logging-card-grid">
                         <div class="logging-metric-block">
                             <span class="log-label">CSV Logger Daemon:</span>
-                            <span id="log-status-badge" class="status-pill {% if s.logging.status == 'ACTIVE' %}status-online{% else %}status-offline{% endif %}">
+                            <span id="log-status-badge"
+                                class="status-pill {% if s.logging.status == 'ACTIVE' %}status-online{% else %}status-offline{% endif %}">
                                 {{ s.logging.status }}
                             </span>
                         </div>
                         <div class="logging-metric-block">
                             <span class="log-label">Last Successful Sample Write:</span>
-                            <strong id="log-last-write">{{ s.logging.last_write_time or 'Awaiting initial sample' }}</strong>
+                            <strong id="log-last-write">{{ s.logging.last_write_time or 'Awaiting initial sample'
+                                }}</strong>
                         </div>
                         <div class="logging-metric-block">
                             <span class="log-label">Total Recorded Samples:</span>
                             <strong id="log-sample-count">{{ s.logging.sample_count }}</strong>
                         </div>
                         <div class="logging-metric-block">
-                            <a href="/download/log.csv" class="download-button" id="btn-download-csv">Download Complete CSV</a>
+                            <a href="/download/log.csv" class="download-button" id="btn-download-csv">Download Complete
+                                CSV</a>
                         </div>
                     </div>
 
                     <div class="content-box">
                         <h3 class="box-title">Data Integrity Standards</h3>
                         <p class="logging-integrity-note">
-                            <strong>Zero-Fabrication Policy:</strong> During periods when the ESP32 node is disconnected or offline, environmental sensor columns (MQ-135, Temperature, Humidity, PIR, Fan) are recorded as empty fields in <code>data/log.csv</code>. They are never substituted with artificial zeros. This preserves research integrity when computing retrospective statistics or training models.
+                            <strong>Zero-Fabrication Policy:</strong> During periods when the ESP32 node is disconnected
+                            or offline, environmental sensor columns (MQ-135, Temperature, Humidity, PIR, Fan) are
+                            recorded as empty fields in <code>data/log.csv</code>. They are never substituted with
+                            artificial zeros. This preserves research integrity when computing retrospective statistics
+                            or training models.
                         </p>
                     </div>
                 </section>
@@ -669,4 +744,5 @@
     </script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
+
 </html>
